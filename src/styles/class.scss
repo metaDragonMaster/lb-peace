@@ -1,0 +1,25 @@
+@mixin mixin-limit-max-width($pageWidth:1200px) {
+	min-width: $pageWidth;
+	padding: 0 calc((100% - $pageWidth - 60px) / 2 + 30px);
+}
+
+.limit-max-width-media {
+	@media screen and (min-width: 1260px) {
+		@include mixin-limit-max-width(1200px);
+	}
+	@media screen and (max-width: 1259px) {
+		padding: 0 20px;
+	}
+	@media screen and (max-width: 769px) {
+		padding: 0 8px;
+	}
+}
+
+.flex {
+	display: flex;
+}
+.flex-column {
+	@extend .flex;
+	flex-direction: column;
+	align-items: center;
+}
