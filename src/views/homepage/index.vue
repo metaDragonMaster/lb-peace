@@ -4,15 +4,15 @@
 			{{ $t("标题.LB-PEACE", 1) }}
 			<span class="theme-color">- {{ $t("标题.LB-PEACE", 2) }}</span>
 		</h3>
-		<h3 class="title text-align-center">
+		<!-- <h3 class="title text-align-center">
 			<p>{{ rTime }}</p>
 			<p>{{ _time }}</p>
-		</h3>
+		</h3> -->
 		<!-- <h3 class="title text-align-center">时间计时器：{{ time }}</h3> -->
-		<div>
-			<p>{{ tList }}</p>
+		<!-- <div> -->
+			<!-- <p>{{ tList }}</p> -->
 			<!-- <p>{{ ConditionalValue }}</p> -->
-		</div>
+		<!-- </div> -->
 		<div class="limit-max-width-media">
 			<ul class="content-grid" v-if="tList.length > 0">
 				<li
@@ -139,6 +139,8 @@ onBeforeUpdate(() => {
 	cardRefs.value = []
 })
 onMounted(async () => {
+	rTime.value = await getRTime()
+	_time.value = moment(new Date()).unix()
 	await init()
 })
 function textFromWei(str) {
@@ -164,8 +166,6 @@ const defaultCitem = {
 	'f': false,
 }
 async function init() {
-	_time.value = moment(new Date()).unix()
-	rTime.value = await getRTime()
 	const _tList = await getTList()
 	const _cList = await getConditionalValue()
 	// console.log("_tList", _tList)
