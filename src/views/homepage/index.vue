@@ -4,15 +4,6 @@
 			{{ $t("标题.LB-PEACE", 1) }}
 			<span class="theme-color">- {{ $t("标题.LB-PEACE", 2) }}</span>
 		</h3>
-		<!-- <h3 class="title text-align-center">
-			<p>{{ rTime }}</p>
-			<p>{{ _time }}</p>
-		</h3>-->
-		<!-- <h3 class="title text-align-center">时间计时器：{{ time }}</h3> -->
-		<!-- <div> -->
-		<!-- <p>{{ tList }}</p> -->
-		<!-- <p>{{ ConditionalValue }}</p> -->
-		<!-- </div> -->
 		<div class="limit-max-width-media">
 			<ul class="content-grid" v-if="tList.length > 0">
 				<li
@@ -24,7 +15,6 @@
 					<h3
 						class="title theme-color text-align-center"
 					>{{ cardTitle(item.conditional, item.interest) }}</h3>
-					<!-- <p class="label theme-color"></p> -->
 					<p class="label theme-color">已存入</p>
 					<div class="cell">
 						<p>
@@ -61,7 +51,8 @@
 					<button class="theme-bg-color submit" @click="join(item.amount, item.id)">{{ $t('转入') }}</button>
 					<button class="theme-bg-color-black submit receive" @click="withdraw(index)">{{ $t('领取') }}</button>
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}23:54:54</p> -->
-					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}:{{ timeCoundDwon(item.e_time, item.id) }}</p> -->
+					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}:{{ tListCountDown(item._countDown) }}</p> -->
+					<p class="text-align-center">{{ $t('领取倒计时') }}:{{ item._countDown || '可领取' }}</p>
 				</li>
 			</ul>
 			<el-empty v-else></el-empty>
@@ -86,7 +77,7 @@ import {
 } from "@/stores/web3js";
 import {
 	ref,
-	// watch,
+	watch,
 	computed,
 	onMounted,
 	onBeforeUpdate,
@@ -95,9 +86,9 @@ import { useLanguage } from "@/hooks/useLanguage"
 import { AbiAddressLB } from "@/abis/index"
 import { conditionalValueInterface } from '@/abis/interface'
 import { ArrayKeysToObject } from "@/utils/tools"
-// import { formatTimeDown } from "@/utils/deta"
-// import { useSafeInterval } from "@/hooks/useSafeListener"
-// import moment from "moment"
+import { formatTimeDown } from "@/utils/deta"
+import { useSafeInterval } from "@/hooks/useSafeListener"
+import moment from "moment"
 
 
 const { t } = useLanguage()
@@ -107,12 +98,13 @@ const storeWeb3js = UseStoreWeb3js();
 const { userAddress, web3 } = storeToRefs(storeWeb3js);
 const storeContracts = UseStoreContracts();
 const { Contracts } = storeToRefs(storeContracts);
-// const rTime = ref('0')
-// const _time = ref(0)
+const rTime = ref('0')
+const _time = ref(0)
 // const formatTime = ref('')
-// useSafeInterval(() => {
-// 	_time.value += 1
-// })
+useSafeInterval(() => {
+	_time.value += 1
+	// formatTime.value =
+})
 
 // function formatTimeDown(time) {
 // 	const day = Math.floor(time / (60 * 60 * 24)); //计算天数
@@ -123,47 +115,50 @@ const { Contracts } = storeToRefs(storeContracts);
 // 		day,hour,minute,second
 // 	}
 // }
-// const timeCoundDwon = computed(() => (eTime) => {
-// 	const t = Number(rTime.value) + Number(eTime)
-// 	const n = moment(new Date()).unix()
-// 	const can = t - n;
-// 	const {
-// 		day,hour,minute,second
-// 	} = formatTimeDown(can)
-// 	return `${day}:${hour}:${minute}:${second}`
-// })
-// const timeCoundDwon = computed(() => (eTime) => {
-// 	const t = Number(rTime.value) + Number(eTime)
-// 	return moment(t).format('DD:HH:mm:ss')
-// })
-// function timeCoundDwon (eTime) {
-// 	try {
-// 		const t = Number(rTime.value) + Number(eTime)
-// 		const n = moment(new Date()).unix()
-// 		const can = t - n;
-// 		// console.log(can,t, n,moment(can).format('DD:HH:mm:ss'));
-// 		// 1648590363
-// 		// 1648595734
-// 		// if (can < 0) {
-// 		// 	return '可领取'
-// 		// } else {
-// 		// 	return moment(can).format('DD:HH:mm:ss')
-// 		// }
-// 		return moment(n).format('DD:HH:mm:ss')
-// 	}//1648597785 1648597784
-// 	catch (e) {
-// 		return ''
-// 	}
-// }
-// console.log(moment(new Date()).unix())
 
+// const endT = moment(new Date()).unix() + 10
+watch(() => _time.value, () => {
+	tList.value.map(item => {
+		// atime(item)
+		item._countDown = setCountDown(item.e_time)
+	})
+	// setCountDown(endT)
+})
+function myFormat(num) {
+	if (num == '0' || num == 0) {
+		return '00'
+	} else if (num < 10) {
+		return '0' + num
+	} else {
+		return '' + num
+	}
+}
+function setCountDown(e_time) {
+	const eTime = Number(rTime.value) + Number(e_time)
+	const Now = moment(new Date()).unix()
+	const down = eTime - Now;
+	// console.log("eTime", e_time,rTime.value,eTime)
+	if (down <= 0) {
+		// console.log("not can", down);
+		return ''
+	} else {
+		const format = formatTimeDown(down)
+		const _day = myFormat(format.day)
+		const _hour = myFormat(format.hour)
+		const _minute = myFormat(format.minute)
+		const _second = myFormat(format.second)
+		// console.log(eTime, Now, down, _day, _hour, _minute, _second, format)
+		return `${_day}:${_hour}:${_minute}:${_second}`
+	}
+}
 
 onBeforeUpdate(() => {
 	cardRefs.value = []
 })
 onMounted(async () => {
-	// rTime.value = await getRTime()
-	// _time.value = moment(new Date()).unix()
+	rTime.value = await getRTime()
+	console.log("rTime----",rTime.value)
+	_time.value = moment(new Date()).unix()
 	await init()
 })
 function textFromWei(str) {
@@ -207,6 +202,8 @@ async function init() {
 			...item,
 			...cItem,
 		}
+
+		// atime(item)
 		return item
 	})
 	console.log("tList --->>", tList.value)
@@ -237,6 +234,7 @@ async function getTList() {
 					amount: 0,
 					_calculate: _calculate,
 					_received: _received,
+					_countDown: 0
 					// _calculate: '0'
 				});
 			}
@@ -256,17 +254,17 @@ async function getTList() {
 
 // const _7day = '604800'
 
-// async function getRTime() {
-// 	try {
-// 		const { LBPOOLContract } = Contracts.value;
-// 		const _rTime = await LBPOOLContract.methods.get_r_time().call();
-// 		// console.log('_rTime', _rTime)
-// 		return _rTime
-// 	} catch (e) {
-// 		console.error(e);
-// 		return '0'
-// 	}
-// }
+async function getRTime() {
+	try {
+		const { LBPOOLContract } = Contracts.value;
+		const _rTime = await LBPOOLContract.methods.get_r_time().call();
+		// console.log('_rTime', _rTime)
+		return _rTime
+	} catch (e) {
+		console.error(e);
+		return '0'
+	}
+}
 async function getConditionalValue() {
 	const load = lockLoadHandler("getConditionalValue loading...");
 	try {

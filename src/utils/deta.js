@@ -39,7 +39,7 @@ export function formatTimeDown(time) {
 	const minute = Math.floor((time / 60) % 60); //计算分钟数
 	const second = Math.floor(time % 60); //计算秒数
 	return {
-		day,hour,minute,second
+		day, hour, minute, second
 	}
 }
 
@@ -177,19 +177,18 @@ export function thirteenBitTimestamp(time) {
 	var d = new Date();//Date有需要参数可以传入
 	alert(Format(d,"yyyy-MM-dd"));
 */
+export function zeroize(value, length) {
+	if (!length) length = 2;
+	value = String(value);
+	let i = 0;
+	let zeros = '';
+	for (; i < (length - value.length); i++) {
+		zeros += '0';
+	}
+	return zeros + value;
+}
 export function Format(now, mask) {
 	let d = now;
-	const zeroize = function (value, length) {
-		if (!length) length = 2;
-		value = String(value);
-		let i = 0;
-		let zeros = '';
-		for (; i < (length - value.length); i++) {
-			zeros += '0';
-		}
-		return zeros + value;
-	};
-
 	return mask.replace(/"[^"]*"|'[^']*'|\b(?:d{1,4}|m{1,4}|yy(?:yy)?|([hHMstT])\1?|[lLZ])\b/g, function ($0) {
 		switch ($0) {
 			case 'd': return d.getDate();

@@ -15,29 +15,6 @@ export default [
 	{
 		"inputs": [
 			{
-				"internalType": "contract IERC20",
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "k",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "join",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address[]",
 				"name": "payees",
 				"type": "address[]"
@@ -75,6 +52,29 @@ export default [
 		],
 		"name": "ERC20PaymentReleased",
 		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "k",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "join",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -167,6 +167,19 @@ export default [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "_c_time",
+				"type": "uint256"
+			}
+		],
+		"name": "set_c_time",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256[]",
 				"name": "_conditional_value",
 				"type": "uint256[]"
@@ -243,6 +256,19 @@ export default [
 			}
 		],
 		"name": "set_r_time",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_send_lb_For",
+				"type": "address"
+			}
+		],
+		"name": "set_send_lb_For",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -353,6 +379,19 @@ export default [
 			}
 		],
 		"name": "calculate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_c_time",
 		"outputs": [
 			{
 				"internalType": "uint256",
