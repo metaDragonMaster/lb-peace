@@ -7,11 +7,11 @@
 		<!-- <h3 class="title text-align-center">
 			<p>{{ rTime }}</p>
 			<p>{{ _time }}</p>
-		</h3> -->
+		</h3>-->
 		<!-- <h3 class="title text-align-center">时间计时器：{{ time }}</h3> -->
 		<!-- <div> -->
-			<!-- <p>{{ tList }}</p> -->
-			<!-- <p>{{ ConditionalValue }}</p> -->
+		<!-- <p>{{ tList }}</p> -->
+		<!-- <p>{{ ConditionalValue }}</p> -->
 		<!-- </div> -->
 		<div class="limit-max-width-media">
 			<ul class="content-grid" v-if="tList.length > 0">
@@ -61,7 +61,7 @@
 					<button class="theme-bg-color submit" @click="join(item.amount, item.id)">{{ $t('转入') }}</button>
 					<button class="theme-bg-color-black submit receive" @click="withdraw(index)">{{ $t('领取') }}</button>
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}23:54:54</p> -->
-					<p class="text-align-center">{{ $t('领取倒计时') }}:{{ timeCoundDwon(item.e_time,item.id) }}</p>
+					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}:{{ timeCoundDwon(item.e_time, item.id) }}</p> -->
 				</li>
 			</ul>
 			<el-empty v-else></el-empty>
@@ -96,8 +96,8 @@ import { AbiAddressLB } from "@/abis/index"
 import { conditionalValueInterface } from '@/abis/interface'
 import { ArrayKeysToObject } from "@/utils/tools"
 // import { formatTimeDown } from "@/utils/deta"
-import { useSafeInterval } from "@/hooks/useSafeListener"
-import moment from "moment"
+// import { useSafeInterval } from "@/hooks/useSafeListener"
+// import moment from "moment"
 
 
 const { t } = useLanguage()
@@ -107,31 +107,54 @@ const storeWeb3js = UseStoreWeb3js();
 const { userAddress, web3 } = storeToRefs(storeWeb3js);
 const storeContracts = UseStoreContracts();
 const { Contracts } = storeToRefs(storeContracts);
-const rTime = ref('0')
-const _time = ref(0)
+// const rTime = ref('0')
+// const _time = ref(0)
 // const formatTime = ref('')
-useSafeInterval(() => {
-	_time.value += 1
-	// formatTime.value =
-})
-function timeCoundDwon (eTime) {
-	try {
-		const t = Number(rTime.value) + Number(eTime)
-		const n = moment(new Date()).unix()
-		const can = t - n;
-		// console.log(can,t, n,moment(can).format('DD:HH:mm:ss'));
-		// 1648590363
-		// 1648595734
-		if (can < 0) {
-			return '可领取'
-		} else {
-			return moment(can).format('DD:HH:mm:ss')
-		}
-	}//1648597785 1648597784
-	catch (e) {
-		return ''
-	}
-}
+// useSafeInterval(() => {
+// 	_time.value += 1
+// })
+
+// function formatTimeDown(time) {
+// 	const day = Math.floor(time / (60 * 60 * 24)); //计算天数
+// 	const hour = Math.floor((time / (60 * 60)) % 24); //计算小时数
+// 	const minute = Math.floor((time / 60) % 60); //计算分钟数
+// 	const second = Math.floor(time % 60); //计算秒数
+// 	return {
+// 		day,hour,minute,second
+// 	}
+// }
+// const timeCoundDwon = computed(() => (eTime) => {
+// 	const t = Number(rTime.value) + Number(eTime)
+// 	const n = moment(new Date()).unix()
+// 	const can = t - n;
+// 	const {
+// 		day,hour,minute,second
+// 	} = formatTimeDown(can)
+// 	return `${day}:${hour}:${minute}:${second}`
+// })
+// const timeCoundDwon = computed(() => (eTime) => {
+// 	const t = Number(rTime.value) + Number(eTime)
+// 	return moment(t).format('DD:HH:mm:ss')
+// })
+// function timeCoundDwon (eTime) {
+// 	try {
+// 		const t = Number(rTime.value) + Number(eTime)
+// 		const n = moment(new Date()).unix()
+// 		const can = t - n;
+// 		// console.log(can,t, n,moment(can).format('DD:HH:mm:ss'));
+// 		// 1648590363
+// 		// 1648595734
+// 		// if (can < 0) {
+// 		// 	return '可领取'
+// 		// } else {
+// 		// 	return moment(can).format('DD:HH:mm:ss')
+// 		// }
+// 		return moment(n).format('DD:HH:mm:ss')
+// 	}//1648597785 1648597784
+// 	catch (e) {
+// 		return ''
+// 	}
+// }
 // console.log(moment(new Date()).unix())
 
 
@@ -139,8 +162,8 @@ onBeforeUpdate(() => {
 	cardRefs.value = []
 })
 onMounted(async () => {
-	rTime.value = await getRTime()
-	_time.value = moment(new Date()).unix()
+	// rTime.value = await getRTime()
+	// _time.value = moment(new Date()).unix()
 	await init()
 })
 function textFromWei(str) {
@@ -166,8 +189,12 @@ const defaultCitem = {
 	'f': false,
 }
 async function init() {
+	console.log('init');
 	const _tList = await getTList()
 	const _cList = await getConditionalValue()
+	// const _received1 = await getReceived(0);
+	// const _received2 = await getReceived(1);
+	// console.log(_received1,_received2);
 	// console.log("_tList", _tList)
 
 	tList.value = _tList.map((item) => {
@@ -229,17 +256,17 @@ async function getTList() {
 
 // const _7day = '604800'
 
-async function getRTime() {
-	try {
-		const { LBPOOLContract } = Contracts.value;
-		const _rTime = await LBPOOLContract.methods.get_r_time().call();
-		// console.log('_rTime', _rTime)
-		return _rTime
-	} catch (e) {
-		console.error(e);
-		return '0'
-	}
-}
+// async function getRTime() {
+// 	try {
+// 		const { LBPOOLContract } = Contracts.value;
+// 		const _rTime = await LBPOOLContract.methods.get_r_time().call();
+// 		// console.log('_rTime', _rTime)
+// 		return _rTime
+// 	} catch (e) {
+// 		console.error(e);
+// 		return '0'
+// 	}
+// }
 async function getConditionalValue() {
 	const load = lockLoadHandler("getConditionalValue loading...");
 	try {
@@ -288,7 +315,9 @@ async function calculate(index) {
 async function getReceived(index) {
 	try {
 		const { LBPOOLContract } = Contracts.value;
-		const res = await LBPOOLContract.methods.get_received(AbiAddressLB, userAddress.value, index).call();
+		const res = await LBPOOLContract.methods.get_received(AbiAddressLB, userAddress.value, index).call({
+			from: userAddress.value
+		});
 		// console.log("getReceived", res);
 		return res
 	} catch (e) {
