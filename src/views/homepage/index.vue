@@ -40,7 +40,7 @@
 						<span class="theme-color">{{ textFromWei(item._received) }}</span>
 					</div>
 					<!-- <el-input-number class="input" type="text" placeholder="请输入LB数量" v-model.number="item.amount" /> -->
-					<p class="label theme-color">转入金额：</p>
+					<p class="label theme-color">转入LB数量：</p>
 					<el-input-number
 						class="input"
 						v-model="item.amount"
