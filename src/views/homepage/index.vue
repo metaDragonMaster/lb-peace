@@ -50,7 +50,8 @@
 						:controls="false"
 					/>
 					<button class="theme-bg-color submit" @click="join(item.amount, item.id)">{{ $t('转入') }}</button>
-					<button class="theme-bg-color-black submit receive" @click="withdraw(index)">{{ $t('领取') }}</button>
+					<!-- <button class="theme-bg-color-black submit receive" @click="withdraw(index)">{{ $t('领取') }}</button> -->
+					<button class="theme-bg-color-black submit receive" @click="ps">{{ $t('领取') }}</button>
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}23:54:54</p> -->
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}:{{ tListCountDown(item._countDown) }}</p> -->
 					<p class="text-align-center">{{ $t('领取倒计时') }}:{{ item._countDown || '可领取' }}</p>
@@ -121,6 +122,7 @@ useSafeInterval(() => {
 watch(() => _time.value, () => {
 	tList.value.map(item => {
 		// atime(item)
+		// 这里多了一分钟左右，但是我这里传值是没问题的，问题在于e_time里肯定多了那么点点时间
 		item._countDown = setCountDown(item.e_time)
 	})
 	// setCountDown(endT)
@@ -135,6 +137,7 @@ function myFormat(num) {
 	}
 }
 function setCountDown(e_time) {
+	// console.log("setCountDown",Number(rTime.value) , Number(e_time))
 	const eTime = Number(rTime.value) + Number(e_time)
 	const Now = moment(new Date()).unix()
 	const down = eTime - Now;
@@ -401,7 +404,7 @@ async function withdraw(index) {
 		const { LBPOOLContract } = Contracts.value;
 		const res = await LBPOOLContract.methods
 			.withdraw(
-				AbiAddressLB,
+				AbiAddressLB,//0x85973C97919c999E5D3d8832290152a3ACdf8a6E
 				index
 			)
 			.send({
@@ -422,7 +425,12 @@ async function withdraw(index) {
 	}
 }
 
-
+function ps() {
+	PlusElMessage({
+		type: 'warning',
+		message: '暂时无法使用。'
+	})
+}
 
 </script>
 <style lang="scss" scoped>
