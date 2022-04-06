@@ -89,7 +89,7 @@
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}23:54:54</p> -->
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}:{{ tListCountDown(item._countDown) }}</p> -->
 					<p class="text-align-center">
-						{{ $t("领取倒计时") }}:{{ item._countDown || "可领取" }}
+						{{ $t("领取倒计时") }}:{{ countDownText(item._calculate,item._countDown)}}
 					</p>
 				</li>
 			</ul>
@@ -128,6 +128,17 @@ const storeContracts = UseStoreContracts();
 const { Contracts } = storeToRefs(storeContracts);
 const rTime = ref("0");
 const _time = ref(0);
+function countDownText(_calculate, _countDown) {
+	if (new Decimal(_calculate) > 0) {
+		if (!_countDown) {
+			return _countDown
+		} else {
+			return "可领取"
+		}
+	} else {
+		return "不可领取";
+	}
+}
 // const formatTime = ref('')
 useSafeInterval(() => {
 	_time.value += 1;
