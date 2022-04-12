@@ -181,11 +181,22 @@ async function init() {
 		const Conditionals = await LNContract.methods
 			.get_conditional_value()
 			.call();
+		console.log('Conditionals',Conditionals);
 		const Interests = await LNContract.methods.get_interest_value().call();
+		console.log('Interests',Interests);
+
 		const _calculate = await calculate()
+		console.log('_calculate',_calculate);
+
 		const _userValue = await getUserValue()
+		console.log('_userValue',_userValue);
+
 		const _received = await getReceived()
+		console.log('_received',_received);
+
 		const _NFTTokens = await getNFTTokens()
+		console.log('_received',_received);
+
 		console.log('_NFTTokens', _NFTTokens)
 		NFTTokens.value = _NFTTokens
 		NFTData.value = {
@@ -283,6 +294,7 @@ async function calculate() {
 		const res = await LNContract.methods.calculate(userAddress.value, false).call({
 			from: userAddress.value,
 		});
+		if(res == '0') return res;
 		const _res = await getPAmountOut(res)
 		console.log("calculate", res, _res)
 		return _res
@@ -361,6 +373,7 @@ async function withdraw() {
 async function getPAmountOut(value) {
 	try {
 		const { LNContract } = Contracts.value;
+		console.log('get_p_AmountOut value', value)
 		const res = await LNContract.methods.get_p_AmountOut(value).call()
 		console.log('get_p_AmountOut', res)
 		return res
