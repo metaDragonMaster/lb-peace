@@ -6,21 +6,15 @@
     withdraw_times: "0" //提取次数
 */
 export const userInfoInterface = [
-    'end_time',
-    'f',
-    'interest_bearing_principal',
-    'quantity',
-    'withdraw_times',
+	'end_time',
+	'f',
+	'interest_bearing_principal',
+	'quantity',
+	'withdraw_times',
 ];
-export const kingSortInterface = [
-    '_released',
-    '_us'
-]
+export const kingSortInterface = ['_released', '_us'];
 
-export const reInterestsInterface = [
-    '_income',
-    '_released'
-]
+export const reInterestsInterface = ['_income', '_released'];
 
 export const conditionalValueInterface = [
 	'value',
@@ -29,4 +23,12 @@ export const conditionalValueInterface = [
 	'e_time',
 	'_index_no',
 	'f',
-]
+];
+
+export const getUserValueInterface = [
+	'b_time',
+	'e_time',
+	'f',
+	'_day',
+	'_token_id_no',
+];

@@ -1,8 +1,7 @@
 <template>
 	<div class="homepage">
 		<h3 class="title text-align-center">
-			{{ $t("标题.LB-PEACE", 1) }}
-			<span class="theme-color">- {{ $t("标题.LB-PEACE", 2) }}</span>
+			LB<span class="theme-color">-PEACE</span>
 		</h3>
 		<div class="limit-max-width-media">
 			<ul class="content-grid" v-if="tList.length > 0">
@@ -119,6 +118,7 @@ import { conditionalValueInterface } from "@/abis/interface";
 import { ArrayKeysToObject } from "@/utils/tools";
 import { formatTimeDown } from "@/utils/deta";
 import { useSafeInterval } from "@/hooks/useSafeListener";
+
 import moment from "moment";
 
 const { t } = useLanguage();
@@ -131,7 +131,7 @@ const { Contracts } = storeToRefs(storeContracts);
 const rTime = ref("0");
 const _time = ref(0);
 const countDownText = computed(() => (_calculate, _countDown) => {
-	console.log(new Decimal(_calculate));
+	// console.log(new Decimal(_calculate));
 	if (new Decimal(_calculate) > 0) {
 		return !_countDown ? "可领取" : _countDown;
 	} else {

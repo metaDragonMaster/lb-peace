@@ -5,6 +5,7 @@
 				<OpenIcon :active="active" @click="openDrawer"></OpenIcon>
 			</div>
 			<div class="pc">
+				<selectModuleTypeVue></selectModuleTypeVue>
 				<UserAssets></UserAssets>
 				<LinkWallet></LinkWallet>
 			</div>
@@ -13,6 +14,7 @@
 			<div class="drawer-flex">
 				<UserAssets></UserAssets>
 				<LinkWallet></LinkWallet>
+				<selectModuleTypeVue></selectModuleTypeVue>
 			</div>
 		</el-drawer>
 	</div>
@@ -20,6 +22,7 @@
 
 <script setup>
 import { ref } from "vue";
+import selectModuleTypeVue from "./selectModuleType.vue";
 import OpenIcon from "./openIcon";
 import UserAssets from "./userAssets"
 import LinkWallet from './linkWallet.vue';
