@@ -1,5 +1,5 @@
 module.exports = {
-    history:'hash',// ['hash', 'history']
+    history:'history',// ['hash', 'history']
     titleSeparator: '-',
     whiteRathPathList: ["/", "/error/404"],
 }

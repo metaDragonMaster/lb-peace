@@ -15,7 +15,7 @@
 					<div class="cell">
 						<p>
 							<img class="icon" src="@/assets/icons/icon-NFT.png" alt="errorImage" />
-							<span>LB</span>
+							<span>MD</span>
 						</p>
 						<span class="theme-color">
 							<!-- {{ DepositedValue(NFTData.value, NFTData.conditional) }} -->

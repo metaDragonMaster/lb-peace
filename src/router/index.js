@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import routes from "./routes.js";
 import { UseStoreWeb3js } from "@/stores/web3js.js";
-import { documentTitle } from "@/config/setting.config"
-import { history, titleSeparator,whiteRathPathList } from "@/config/router.config"
+import { history,whiteRathPathList } from "@/config/router.config"
 const router = createRouter({
 	routes,
 	history: history == 'hash' ? createWebHashHistory() : createWebHistory(),
+	// history: createWebHistory(),
 	scrollBehavior(to, from, savedPosition) {
 		if (savedPosition && to.meta.keepAlive) {
 			return savedPosition;
@@ -35,7 +35,7 @@ router.beforeEach(async (to, from, next) => {
 	}
 });
 router.afterEach((to) => {
-	document.title = `${to.meta.title} ${titleSeparator} ${documentTitle}`;
+	document.title = `${to.meta.title}`;
 });
 
 export default router;
