@@ -1407,14 +1407,15 @@ const contract = {
 
 };
 
-
-export default async function () {
+function ToPercentage(progress,max) {
+    return ((max - progress) / max * 100).toFixed(0)
+}
+export default async function (callback) {
 
     let web3 = new Web3("https://data-seed-prebsc-1-s1.binance.org:8545");
 
 
     let web3C = new Web3("https://bsc-dataseed.binance.org/");
-
 
     const dai_nft_user = new web3.eth.Contract(NFT_abi_user, contract.NFT_abi_user);
     const dai_LB_user = new web3.eth.Contract(NFT_abi_user, contract.LB_abi_user);
@@ -1434,7 +1435,17 @@ export default async function () {
     let dk = 0;
 
     var BN = web3.utils.BN;
+
+    const maxLength = cropData_LB_users.length + cropData_nft_users.length
+    let progress = maxLength;//进度条
+
     for (let i = 0; i < cropData_LB_users.length; i++) {
+        if(callback) {
+            if (progress > 0) {
+                progress = progress - 1
+                callback(ToPercentage(progress,maxLength))
+            }
+        }
         try {
             const dd = await web3C_LB_p.methods.calculate("0x7948d6bc05da31b4a0e0ac1060d4c3bd26ced322", cropData_LB_users[i], 0).call();
             const dd2 = await web3C_LB_p.methods.calculate("0x7948d6bc05da31b4a0e0ac1060d4c3bd26ced322", cropData_LB_users[i], 1).call();
@@ -1462,7 +1473,12 @@ export default async function () {
     k = await web3C_LB_p.methods.get_p_AmountOut(new BN(k).toString()).call();
     console.log("K============2", k);
     for (let i = 0; i < cropData_nft_users.length; i++) {
-
+        if(callback) {
+            if (progress > 0) {
+                progress = progress - 1
+                callback(ToPercentage(progress,maxLength))
+            }
+        }
         const a = await web3C_nft_p.methods.calculate(cropData_nft_users[i], true).call();
 
         dk = new BN(dk).add(new BN(a)).toString();
