@@ -33,6 +33,14 @@ const routes = [
 		],
 	},
 	{
+		path: '/gPAmount',
+		name: 'gPAmount',
+		meta: {
+			title: 'gPAmount',
+		},
+		component: () => import('@/views/gPAmount/index.vue'),
+	},
+	{
 		path: '/error/404',
 		name: 'error404',
 		meta: {

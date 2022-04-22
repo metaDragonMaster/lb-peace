@@ -529,17 +529,17 @@ async function withdraw(index, _countDown, _calculate) {
 :deep(.input).el-input-number {
 	width: 100%;
 
-	.el-input__inner {
-		--el-input-text-color: #ffffff;
-		--el-input-focus-border: #333333;
-		--el-input-focus-border-color: #e7e7e7;
-		--el-input-border-color: #777777;
-		--el-input-bg-color: transparent;
-		--el-input-placeholder-color: #777777;
-		--el-input-border-radius: 0;
-		height: 60px;
-		text-align: center;
-	}
+	// .el-input__inner {
+	// 	--el-input-text-color: #ffffff;
+	// 	--el-input-focus-border: #333333;
+	// 	--el-input-focus-border-color: #e7e7e7;
+	// 	--el-input-border-color: #777777;
+	// 	--el-input-bg-color: transparent;
+	// 	--el-input-placeholder-color: #777777;
+	// 	--el-input-border-radius: 0;
+	// 	height: 60px;
+	// 	text-align: center;
+	// }
 }
 .card {
 	// height: 640px;
