@@ -12,7 +12,8 @@ import {
 	AbiLB,
 	AbiLBPOOL,
 	AbiLN,
-	AbiNFT
+	AbiNFT,
+	peace,
 } from '@/abis/index.js';
 
 export const UseStoreWeb3js = defineStore('Web3js', {
@@ -65,11 +66,13 @@ async function startContracts(web3) {
 	const LBPOOLContract = await getContract(web3, AbiLBPOOL, AbiAddressLBPOOL);
 	const LNContract = await getContract(web3, AbiLN, AbiAddressLN);
 	const NFTContract = await getContract(web3, AbiNFT, AbiAddressNFT);
+	const PeaceContract = await getContract(web3, AbiLB, peace);
 	return {
 		LBContract,
 		LBPOOLContract,
 		LNContract,
 		NFTContract,
+		PeaceContract
 	};
 }
 

@@ -54,18 +54,18 @@
 					/>
 					<button class="theme-bg-color submit" @click="join">{{ $t("转入") }}</button>
 					<!-- @click="join(NFTData.amount, NFTData.id)" -->
-					<button class="theme-bg-color-black submit receive" @click="withdraw">
+					<!-- <button class="theme-bg-color-black submit receive" @click="withdraw">
 						{{
 							$t("领取")
 						}}
-					</button>
+					</button> -->
 					<!-- 	@click="
 							withdraw(index, NFTData._countDown, NFTData.calculate)
 					"-->
-					<p class="text-align-center">
+					<!-- <p class="text-align-center">
 						{{ $t("领取倒计时") }}:
 						{{ countDownText }}
-					</p>
+					</p> -->
 				</div>
 		</div>
 	</div>
@@ -87,7 +87,7 @@ import { ArrayKeysToObject } from "@/utils/tools";
 import { AbiAddressNFT } from "@/abis";
 import moment from "moment";
 import { formatTimeDown } from "@/utils/deta";
-import { useSafeInterval } from "@/hooks/useSafeListener";
+// import { useSafeInterval } from "@/hooks/useSafeListener";
 
 const { t } = useLanguage();
 const storeContracts = UseStoreContracts();
@@ -105,17 +105,17 @@ function timeTampToDay(timeTamp) {
 	return Math.floor(timeTamp / (60 * 60 * 24)).toString();
 }
 
-useSafeInterval(() => {
-	countDown.value = setCountDown();
-});
+// useSafeInterval(() => {
+// 	countDown.value = setCountDown();
+// });
 const countDown = ref('')
-const countDownText = computed(() => {
-	if (new Decimal(NFTData.value._calculate) > 0) {
-		return !countDown.value ? "可领取" : countDown.value;
-	} else {
-		return "不可领取";
-	}
-});
+// const countDownText = computed(() => {
+// 	if (new Decimal(NFTData.value._calculate) > 0) {
+// 		return !countDown.value ? "可领取" : countDown.value;
+// 	} else {
+// 		return "不可领取";
+// 	}
+// });
 
 function myFormat(num) {
 	if (num == "0" || num == 0) {

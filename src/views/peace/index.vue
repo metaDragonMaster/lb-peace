@@ -16,8 +16,8 @@ const { userAddress } = storeToRefs(storeWeb3js);
 async function approve() {
 
 	try {
-		const { LBContract } = Contracts.value;
-		const res = await LBContract.methods.approve(AbiAddressLN, addedValue).send({
+		const { PeaceContract } = Contracts.value;
+		const res = await PeaceContract.methods.approve(AbiAddressLN, addedValue).send({
 			from: userAddress.value,
 		});
 		console.log(res);
