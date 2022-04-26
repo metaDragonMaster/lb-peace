@@ -76,22 +76,22 @@
 					>
 						{{ $t("转入") }}
 					</button>
-					<!-- <button
+					<button
 						class="theme-bg-color-black submit receive"
 						@click="
 							withdraw(index, item._countDown, item._calculate)
 						"
 					>
 						{{ $t("领取") }}
-					</button> -->
+					</button>
 					<!-- <button class="theme-bg-color-black submit receive" @click="ps">{{ $t('领取') }}</button> -->
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}23:54:54</p> -->
 					<!-- <p class="text-align-center">{{ $t('领取倒计时') }}:{{ tListCountDown(item._countDown) }}</p> -->
-					<!-- <p class="text-align-center">
+					<p class="text-align-center">
 						{{ $t("领取倒计时") }}:{{
 							countDownText(item._calculate, item._countDown)
 						}}
-					</p> -->
+					</p>
 				</li>
 			</ul>
 			<el-empty v-else></el-empty>
@@ -130,19 +130,19 @@ const storeContracts = UseStoreContracts();
 const { Contracts } = storeToRefs(storeContracts);
 const rTime = ref("0");
 const _time = ref(0);
-// const countDownText = computed(() => (_calculate, _countDown) => {
-// 	// console.log(new Decimal(_calculate));
-// 	if (new Decimal(_calculate) > 0) {
-// 		return !_countDown ? "可领取" : _countDown;
-// 	} else {
-// 		return "不可领取";
-// 	}
-// });
-// const formatTime = ref('')
-// useSafeInterval(() => {
-// 	_time.value += 1;
-// 	// formatTime.value =
-// });
+const countDownText = computed(() => (_calculate, _countDown) => {
+	// console.log(new Decimal(_calculate));
+	if (new Decimal(_calculate) > 0) {
+		return !_countDown ? "可领取" : _countDown;
+	} else {
+		return "不可领取";
+	}
+});
+const formatTime = ref('')
+useSafeInterval(() => {
+	_time.value += 1;
+	// formatTime.value =
+});
 
 // function formatTimeDown(time) {
 // 	const day = Math.floor(time / (60 * 60 * 24)); //计算天数
@@ -155,15 +155,15 @@ const _time = ref(0);
 // }
 
 // const endT = moment(new Date()).unix() + 10
-// watch(
-// 	() => _time.value,
-// 	() => {
-// 		tList.value.map((item) => {
-// 			item._countDown = setCountDown(item.e_time);
-// 		});
-// 		// setCountDown(endT)
-// 	}
-// );
+watch(
+	() => _time.value,
+	() => {
+		tList.value.map((item) => {
+			item._countDown = setCountDown(item.e_time);
+		});
+		// setCountDown(endT)
+	}
+);
 function myFormat(num) {
 	if (num == "0" || num == 0) {
 		return "00";
