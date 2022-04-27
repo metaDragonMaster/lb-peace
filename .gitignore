@@ -2,6 +2,7 @@
 node_modules
 /.history
 /dist
+/peace_dist
 
 # local env files
 .env.local

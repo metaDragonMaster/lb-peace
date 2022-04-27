@@ -5,7 +5,7 @@ const path = require('path')
 module.exports = {
 	lintOnSave: true,
 	publicPath: './', // 基本路径
-	outputDir: 'dist', // 输出文件目录
+	outputDir: 'peace_dist', // 输出文件目录
 	productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
 	css: {
 		requireModuleExtension: true,
