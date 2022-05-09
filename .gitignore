@@ -2,7 +2,7 @@
 node_modules
 /.history
 /dist
-/peace_dist
+/nft-peace-dist
 
 # local env files
 .env.local
