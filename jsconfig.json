@@ -5,5 +5,5 @@
         "@/*": ["src/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "nft-peace-dist"]
+  "exclude": ["node_modules", "v1-lb-peace-dist"]
 }
